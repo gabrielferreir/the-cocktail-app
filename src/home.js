@@ -1,27 +1,27 @@
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View, ScrollView, FlatList} from 'react-native';
+import {Platform, StyleSheet, Text, View, ScrollView, FlatList, TouchableOpacity} from 'react-native';
 import {Container, Header, Title, Button, Left, Right, Body, Icon} from 'native-base';
 import {Content, Form, Item, Input, Label} from 'native-base';
 
 export default class Home extends Component<Props> {
 
     static navigationOptions = {
-        title: 'Home',
+        title: 'Home'
     };
 
     render() {
         return (
             <Container>
                 {/*<Header>*/}
-                    {/*<Left>*/}
-                        {/*<Button transparent>*/}
-                            {/*<Icon name='menu'/>*/}
-                        {/*</Button>*/}
-                    {/*</Left>*/}
-                    {/*<Body>*/}
-                    {/*<Title>Home</Title>*/}
-                    {/*</Body>*/}
-                    {/*<Right/>*/}
+                {/*<Left>*/}
+                {/*<Button transparent>*/}
+                {/*<Icon name='menu'/>*/}
+                {/*</Button>*/}
+                {/*</Left>*/}
+                {/*<Body>*/}
+                {/*<Title>Home</Title>*/}
+                {/*</Body>*/}
+                {/*<Right/>*/}
                 {/*</Header>*/}
 
                 <ScrollView>
@@ -94,189 +94,12 @@ export default class Home extends Component<Props> {
                                         <Text>Drink</Text>
                                     </View>
                                 </View>
-                                <Icon type='MaterialIcons' name='arrow-forward' style={{marginRight: 16}}/>
-                            </View>
-                        </View>
 
-                        <View style={{
-                            height: 80,
-                            backgroundColor: '#FFF',
-                            borderRadius: 16,
-                            elevation: 4,
-                            padding: 8,
-                            marginBottom: 16
-                        }}>
-                            <View
-                                style={{flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
-                                <View style={{flex: 1, flexDirection: 'row'}}>
-                                    <View style={{
-                                        height: 64,
-                                        width: 64,
-                                        backgroundColor: '#CDCDCD',
-                                        borderRadius: 64
-                                    }}></View>
-                                    <View style={{height: 64, flex: 1, justifyContent: 'center', paddingLeft: 16}}>
-                                        <Text>Margarita</Text>
-                                        <Text>Drink</Text>
-                                    </View>
-                                </View>
-                                <Icon type='MaterialIcons' name='arrow-forward' style={{marginRight: 16}}/>
-                            </View>
-                        </View>
+                                <TouchableOpacity onPress={() => this.props.navigation.navigate('Detail')}>
+                                    <Icon type='MaterialIcons'
+                                          name='arrow-forward' style={{marginRight: 16}}/>
+                                </TouchableOpacity>
 
-                        <View style={{
-                            height: 80,
-                            backgroundColor: '#FFF',
-                            borderRadius: 16,
-                            elevation: 4,
-                            padding: 8,
-                            marginBottom: 16
-                        }}>
-                            <View
-                                style={{flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
-                                <View style={{flex: 1, flexDirection: 'row'}}>
-                                    <View style={{
-                                        height: 64,
-                                        width: 64,
-                                        backgroundColor: '#CDCDCD',
-                                        borderRadius: 64
-                                    }}></View>
-                                    <View style={{height: 64, flex: 1, justifyContent: 'center', paddingLeft: 16}}>
-                                        <Text>Margarita</Text>
-                                        <Text>Drink</Text>
-                                    </View>
-                                </View>
-                                <Icon type='MaterialIcons' name='arrow-forward' style={{marginRight: 16}}/>
-                            </View>
-                        </View>
-
-                        <View style={{
-                            height: 80,
-                            backgroundColor: '#FFF',
-                            borderRadius: 16,
-                            elevation: 4,
-                            padding: 8,
-                            marginBottom: 16
-                        }}>
-                            <View
-                                style={{flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
-                                <View style={{flex: 1, flexDirection: 'row'}}>
-                                    <View style={{
-                                        height: 64,
-                                        width: 64,
-                                        backgroundColor: '#CDCDCD',
-                                        borderRadius: 64
-                                    }}></View>
-                                    <View style={{height: 64, flex: 1, justifyContent: 'center', paddingLeft: 16}}>
-                                        <Text>Margarita</Text>
-                                        <Text>Drink</Text>
-                                    </View>
-                                </View>
-                                <Icon type='MaterialIcons' name='arrow-forward' style={{marginRight: 16}}/>
-                            </View>
-                        </View>
-
-                        <View style={{
-                            height: 80,
-                            backgroundColor: '#FFF',
-                            borderRadius: 16,
-                            elevation: 4,
-                            padding: 8,
-                            marginBottom: 16
-                        }}>
-                            <View
-                                style={{flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
-                                <View style={{flex: 1, flexDirection: 'row'}}>
-                                    <View style={{
-                                        height: 64,
-                                        width: 64,
-                                        backgroundColor: '#CDCDCD',
-                                        borderRadius: 64
-                                    }}></View>
-                                    <View style={{height: 64, flex: 1, justifyContent: 'center', paddingLeft: 16}}>
-                                        <Text>Margarita</Text>
-                                        <Text>Drink</Text>
-                                    </View>
-                                </View>
-                                <Icon type='MaterialIcons' name='arrow-forward' style={{marginRight: 16}}/>
-                            </View>
-                        </View>
-
-                        <View style={{
-                            height: 80,
-                            backgroundColor: '#FFF',
-                            borderRadius: 16,
-                            elevation: 4,
-                            padding: 8,
-                            marginBottom: 16
-                        }}>
-                            <View
-                                style={{flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
-                                <View style={{flex: 1, flexDirection: 'row'}}>
-                                    <View style={{
-                                        height: 64,
-                                        width: 64,
-                                        backgroundColor: '#CDCDCD',
-                                        borderRadius: 64
-                                    }}></View>
-                                    <View style={{height: 64, flex: 1, justifyContent: 'center', paddingLeft: 16}}>
-                                        <Text>Margarita</Text>
-                                        <Text>Drink</Text>
-                                    </View>
-                                </View>
-                                <Icon type='MaterialIcons' name='arrow-forward' style={{marginRight: 16}}/>
-                            </View>
-                        </View>
-
-                        <View style={{
-                            height: 80,
-                            backgroundColor: '#FFF',
-                            borderRadius: 16,
-                            elevation: 4,
-                            padding: 8,
-                            marginBottom: 16
-                        }}>
-                            <View
-                                style={{flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
-                                <View style={{flex: 1, flexDirection: 'row'}}>
-                                    <View style={{
-                                        height: 64,
-                                        width: 64,
-                                        backgroundColor: '#CDCDCD',
-                                        borderRadius: 64
-                                    }}></View>
-                                    <View style={{height: 64, flex: 1, justifyContent: 'center', paddingLeft: 16}}>
-                                        <Text>Margarita</Text>
-                                        <Text>Drink</Text>
-                                    </View>
-                                </View>
-                                <Icon type='MaterialIcons' name='arrow-forward' style={{marginRight: 16}}/>
-                            </View>
-                        </View>
-
-                        <View style={{
-                            height: 80,
-                            backgroundColor: '#FFF',
-                            borderRadius: 16,
-                            elevation: 4,
-                            padding: 8,
-                            marginBottom: 16
-                        }}>
-                            <View
-                                style={{flex: 1, flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
-                                <View style={{flex: 1, flexDirection: 'row'}}>
-                                    <View style={{
-                                        height: 64,
-                                        width: 64,
-                                        backgroundColor: '#CDCDCD',
-                                        borderRadius: 64
-                                    }}></View>
-                                    <View style={{height: 64, flex: 1, justifyContent: 'center', paddingLeft: 16}}>
-                                        <Text>Margarita</Text>
-                                        <Text>Drink</Text>
-                                    </View>
-                                </View>
-                                <Icon type='MaterialIcons' name='arrow-forward' style={{marginRight: 16}}/>
                             </View>
                         </View>
 
