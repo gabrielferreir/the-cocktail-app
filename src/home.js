@@ -6,23 +6,12 @@ import {Content, Form, Item, Input, Label} from 'native-base';
 export default class Home extends Component<Props> {
 
     static navigationOptions = {
-        title: 'Home'
+        title: 'Home',
     };
 
     render() {
         return (
             <Container>
-                {/*<Header>*/}
-                {/*<Left>*/}
-                {/*<Button transparent>*/}
-                {/*<Icon name='menu'/>*/}
-                {/*</Button>*/}
-                {/*</Left>*/}
-                {/*<Body>*/}
-                {/*<Title>Home</Title>*/}
-                {/*</Body>*/}
-                {/*<Right/>*/}
-                {/*</Header>*/}
 
                 <ScrollView>
 

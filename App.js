@@ -8,11 +8,38 @@ const MainNavigator = createStackNavigator({
             screen: Home,
             title: 'Home'
         },
-        Detail: {screen: Detail},
+        Detail: {
+            screen: Detail,
+            navigationOptions: {
+                title: 'Home',
+                headerStyle: {
+                    headerMode: 'float',
+                    position: 'absolute',
+                    backgroundColor: 'transparent',
+                    headerTintColor: '#303f9f',
+                    zIndex: 100,
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    elevation: 0,
+                    shadowOpacity: 0,
+                    borderBottomWidth: 0,
+                }
+            },
+        },
     },
     {
         initialRouteName: "Home",
         defaultNavigationOptions: {
+            // transparentHeader: {
+            //     position: 'absolute',
+            //     backgroundColor: 'transparent',
+            //     zIndex: 100,
+            //     top: 0,
+            //     left: 0,
+            //     right: 0,
+            //     headerMode: 'screen'
+            // },
             headerTintColor: '#fff',
             headerStyle: {
                 backgroundColor: '#303f9f'
