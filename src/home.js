@@ -78,7 +78,12 @@ export default class Home extends Component<Props> {
                                         backgroundColor: '#CDCDCD',
                                         borderRadius: 64
                                     }}></View>
-                                    <View style={{height: 64, flex: 1, justifyContent: 'center', paddingLeft: 16}}>
+                                    <View style={{
+                                        height: 64,
+                                        flex: 1,
+                                        justifyContent: 'center',
+                                        paddingLeft: 16
+                                    }}>
                                         <Text>Margarita</Text>
                                         <Text>Drink</Text>
                                     </View>

@@ -12,19 +12,7 @@ const MainNavigator = createStackNavigator({
             screen: Detail,
             navigationOptions: {
                 title: 'Home',
-                headerStyle: {
-                    headerMode: 'float',
-                    position: 'absolute',
-                    backgroundColor: 'transparent',
-                    headerTintColor: '#303f9f',
-                    zIndex: 100,
-                    top: 0,
-                    left: 0,
-                    right: 0,
-                    elevation: 0,
-                    shadowOpacity: 0,
-                    borderBottomWidth: 0,
-                }
+                header: null
             },
         },
     },
@@ -42,7 +30,8 @@ const MainNavigator = createStackNavigator({
             // },
             headerTintColor: '#fff',
             headerStyle: {
-                backgroundColor: '#303f9f'
+                backgroundColor: '#4a148c'
+                // 1a237e
             },
         },
     });
