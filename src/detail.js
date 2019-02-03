@@ -60,58 +60,83 @@ export default class Detail extends Component {
                     }
                     scrollEventThrottle={16}>
 
-                    <View>
-                        <Text style={styles.title}>{'Margarita'}</Text>
-                        <Text style={styles.subtitle}>{'Alcoholic'}</Text>
-                    </View>
+                    <View style={styles.wrapper}>
 
-                    <View style={{flex: 1, flexDirection: 'row', alignItems: 'center'}}>
+                        <View style={styles.border}></View>
 
-                        <Text style={styles.subheader}>
-                            INGREDIENTES
-                        </Text>
+                        <View>
+                            <Text style={styles.subtitle}>Nome</Text>
+                            <Text style={styles.title}>Margarita</Text>
+                        </View>
 
                     </View>
 
-                    <Text style={styles.ingredients}>Tequila</Text>
-                    <Text style={styles.ingredients}>Triple sec</Text>
-                    <Text style={styles.ingredients}>Salt</Text>
+                    <View style={styles.wrapper}>
 
-                    <View style={{flex: 1, flexDirection: 'row', alignItems: 'center'}}>
+                        <View style={styles.border}></View>
 
-                        <Text style={styles.subheader}>PREPARO</Text>
+                        <View>
+                            <Text style={styles.subheader}>
+                                Ingredientes
+                            </Text>
 
+                            <Text style={styles.ingredients}>Tequila</Text>
+                            <Text style={styles.ingredients}>Triple sec</Text>
+                            <Text style={styles.ingredients}>Salt</Text>
+                        </View>
                     </View>
-                    {/*<View style={{width: 80, height: 80, backgroundColor: '#F00'}}></View>*/}
 
-                    <Text style={styles.preparation}>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vel ultrices ante. Duis
-                        vulputate
-                        lorem non tortor pharetra, aliquet aliquet leo efficitur. Ut sed rutrum nisi. Pellentesque
-                        facilisis erat sit amet mi ornare, et dapibus tortor congue. Integer vulputate magna a
-                        vehicula
-                        accumsan. Cras nec nunc consequat, volutpat felis vitae, pulvinar nibh. Vestibulum lacinia
-                        in
-                        tortor vel maximus. Suspendisse semper dolor ligula. Praesent pellentesque suscipit enim, at
-                        dictum nisl pellentesque non. Phasellus nec consectetur magna. Interdum et malesuada fames
-                        ac
-                        ante ipsum primis in faucibus. Sed condimentum porttitor elit ut dignissim. Nunc nec libero
-                        a
-                        orci porttitor accumsan eget sed diam. Cras dignissim, nulla sed laoreet accumsan, mi quam
-                        egestas mauris, id posuere purus lorem sagittis purus. Duis sollicitudin neque ac aliquet
-                        sollicitudin.
-                        In eros est, sollicitudin sit amet risus eget, porttitor pulvinar ipsum. Nulla eget quam
-                        arcu.
-                        Mauris vel odio cursus, hendrerit augue et, ultricies massa. Phasellus pharetra et libero id
-                        semper. Sed sollicitudin commodo mi, nec efficitur sem congue vitae. Ut pellentesque augue
-                        ut
-                        lacus finibus sollicitudin. Donec a auctor augue. Orci varius natoque penatibus et magnis
-                        dis
-                        parturient montes, nascetur ridiculus mus. Nullam vitae convallis nulla. Maecenas venenatis
-                        lorem at mi commodo pharetra. Mauris finibus hendrerit magna, sit amet ultrices turpis
-                        aliquet
-                        nec. Proin et diam suscipit, sollicitudin risus ac, porta nibh.
-                    </Text>
+                    <View style={styles.wrapper}>
+
+                        <View style={styles.border}></View>
+
+                        <View>
+                            <Text style={styles.subheader}>
+                                Preparo
+                            </Text>
+
+                            <Text style={styles.preparation}>
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vel ultrices ante. Duis
+                                vulputate
+                                lorem non tortor pharetra, aliquet aliquet leo efficitur. Ut sed rutrum nisi.
+                                Pellentesque
+                                facilisis erat sit amet mi ornare, et dapibus tortor congue. Integer vulputate magna a
+                                vehicula
+                                accumsan. Cras nec nunc consequat, volutpat felis vitae, pulvinar nibh. Vestibulum
+                                lacinia
+                                in
+                                tortor vel maximus. Suspendisse semper dolor ligula. Praesent pellentesque suscipit
+                                enim, at
+                                dictum nisl pellentesque non. Phasellus nec consectetur magna. Interdum et malesuada
+                                fames
+                                ac
+                                ante ipsum primis in faucibus. Sed condimentum porttitor elit ut dignissim. Nunc nec
+                                libero
+                                a
+                                orci porttitor accumsan eget sed diam. Cras dignissim, nulla sed laoreet accumsan, mi
+                                quam
+                                egestas mauris, id posuere purus lorem sagittis purus. Duis sollicitudin neque ac
+                                aliquet
+                                sollicitudin.
+                                In eros est, sollicitudin sit amet risus eget, porttitor pulvinar ipsum. Nulla eget quam
+                                arcu.
+                                Mauris vel odio cursus, hendrerit augue et, ultricies massa. Phasellus pharetra et
+                                libero id
+                                semper. Sed sollicitudin commodo mi, nec efficitur sem congue vitae. Ut pellentesque
+                                augue
+                                ut
+                                lacus finibus sollicitudin. Donec a auctor augue. Orci varius natoque penatibus et
+                                magnis
+                                dis
+                                parturient montes, nascetur ridiculus mus. Nullam vitae convallis nulla. Maecenas
+                                venenatis
+                                lorem at mi commodo pharetra. Mauris finibus hendrerit magna, sit amet ultrices turpis
+                                aliquet
+                                nec. Proin et diam suscipit, sollicitudin risus ac, porta nibh.
+                            </Text>
+
+                        </View>
+                    </View>
 
                 </ScrollView>
 
@@ -137,20 +162,42 @@ const styles = StyleSheet.create({
         zIndex: 9,
         elevation: 8
     },
-    title: {
+    border: {
+        flex: 1,
+        maxWidth: 4,
+        minWidth: 4,
+        backgroundColor: '#4a148c'
+    },
+    wrapper: {
+        width: SCREEN_WIDTH - 32,
+        elevation: 2,
         marginTop: 16,
+        backgroundColor: '#FFF',
+        position: 'relative',
+        borderRadius: 2,
+        overflow: 'hidden',
+        flex: 1,
+        flexDirection: 'row'
+    },
+    title: {
         color: 'rgba(0,0,0,.87)',
         // fontWeight: "bold",
-        fontSize: 24,
+        fontSize: 22,
+        marginBottom: 4,
+        marginLeft: 16
     },
     subtitle: {
+        marginTop: 4,
         fontSize: 14,
         color: 'rgba(0,0,0,.62)',
+        marginLeft: 16
     },
     subheader: {
-        paddingVertical: 18,
+        paddingVertical: 8,
+        marginLeft: 16,
         fontSize: 16,
-        color: 'rgba(0,0,0,.87)',
+        color: 'rgba(0,0,0,.62)',
+
         fontWeight: 'bold'
     },
     ingredients: {
@@ -178,6 +225,7 @@ const styles = StyleSheet.create({
     preparation: {
         fontSize: 14,
         color: 'rgba(0,0,0,.62)',
-        paddingLeft: 16
+        paddingHorizontal: 16,
+        paddingBottom: 16
     }
 });
