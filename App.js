@@ -19,19 +19,9 @@ const MainNavigator = createStackNavigator({
     {
         initialRouteName: "Home",
         defaultNavigationOptions: {
-            // transparentHeader: {
-            //     position: 'absolute',
-            //     backgroundColor: 'transparent',
-            //     zIndex: 100,
-            //     top: 0,
-            //     left: 0,
-            //     right: 0,
-            //     headerMode: 'screen'
-            // },
             headerTintColor: '#fff',
             headerStyle: {
-                backgroundColor: '#4a148c'
-                // 1a237e
+                backgroundColor: '#4a148c' // 1a237e
             },
         },
     });
