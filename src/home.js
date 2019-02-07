@@ -1,14 +1,35 @@
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View, ScrollView, FlatList, TouchableOpacity} from 'react-native';
+import {Platform, StyleSheet, Text, View, ScrollView, FlatList, TouchableOpacity, Image} from 'react-native';
 import {Container, Header, Title, Button, Left, Right, Body, Icon} from 'native-base';
 import {Content, Form, Item, Input, Label} from 'native-base';
-import Repository from './repository';
+import Service from './service';
 
 export default class Home extends Component<Props> {
+
+    service = new Service();
 
     static navigationOptions = {
         title: 'Home',
     };
+
+    constructor() {
+        super();
+        this.state = {
+            suggestions: []
+        };
+        this.get();
+    }
+
+    async get() {
+        for (let i = 0; i < 8; i++) {
+            const item = await this.service.getRandomDrink();
+            this.setState({
+                suggestions: [
+                    ...this.state.suggestions,
+                    item]
+            });
+        }
+    }
 
     categories = [
         {
@@ -124,7 +145,7 @@ export default class Home extends Component<Props> {
                     <View style={{paddingVertical: 16}}>
 
                         <FlatList
-                            data={[{key: 'a'}, {key: 'b'}, {key: 'b'}, {key: 'b'}, {key: 'b'}, {key: 'b'}, {key: 'b'},]}
+                            data={this.state.suggestions}
                             renderItem={({item}) =>
                                 <View style={{
                                     height: 80,
@@ -150,8 +171,14 @@ export default class Home extends Component<Props> {
                                                 height: 64,
                                                 width: 64,
                                                 backgroundColor: '#CDCDCD',
-                                                borderRadius: 64
+                                                borderRadius: 64,
+                                                overflow: 'hidden'
                                             }}>
+
+                                                <Image
+                                                    source={{uri: 'https://www.thecocktaildb.com/images/media/drink/rx8k8e1504365812.jpg'}}
+                                                    style={{height: 64}}/>
+                                                <Text>P</Text>
 
                                             </View>
 
@@ -162,8 +189,8 @@ export default class Home extends Component<Props> {
                                                 paddingLeft: 16
                                             }}>
 
-                                                <Text>Margarita</Text>
-                                                <Text>Drink</Text>
+                                                <Text>{item.name}</Text>
+                                                <Text>{item.category}</Text>
 
                                             </View>
 
