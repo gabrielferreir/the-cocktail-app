@@ -176,7 +176,7 @@ export default class Home extends Component<Props> {
                                             }}>
 
                                                 <Image
-                                                    source={{uri: 'https://www.thecocktaildb.com/images/media/drink/rx8k8e1504365812.jpg'}}
+                                                    source={{uri: item.image}}
                                                     style={{height: 64}}/>
                                                 <Text>P</Text>
 
