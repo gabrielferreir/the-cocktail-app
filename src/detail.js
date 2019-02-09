@@ -5,7 +5,7 @@ import {
     Platform,
     ScrollView,
     StyleSheet,
-    // Text,
+    FlatList,
     View,
     TouchableOpacity,
     Image
@@ -39,6 +39,7 @@ export default class Detail extends Component {
 
     async get(id) {
         const item = await this.service.getDrinkById(id);
+        console.warn(item);
         this.setState({
             drink: item
         });
@@ -97,9 +98,14 @@ export default class Detail extends Component {
                                 Ingredientes
                             </Text>
 
-                            <Text style={styles.ingredients}>Tequila</Text>
-                            <Text style={styles.ingredients}>Triple sec</Text>
-                            <Text style={styles.ingredients}>Salt</Text>
+                            <FlatList
+                                data={this.state.drink.ingredients}
+                                renderItem={({item}) =>
+                                    <Text style={styles.ingredients}>{item.measure} - {item.name}</Text>
+                                }>
+
+                            </FlatList>
+
                         </View>
                     </View>
 
@@ -112,45 +118,8 @@ export default class Detail extends Component {
                                 Preparo
                             </Text>
 
-                            <Text style={styles.preparation}>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vel ultrices ante. Duis
-                                vulputate
-                                lorem non tortor pharetra, aliquet aliquet leo efficitur. Ut sed rutrum nisi.
-                                Pellentesque
-                                facilisis erat sit amet mi ornare, et dapibus tortor congue. Integer vulputate magna a
-                                vehicula
-                                accumsan. Cras nec nunc consequat, volutpat felis vitae, pulvinar nibh. Vestibulum
-                                lacinia
-                                in
-                                tortor vel maximus. Suspendisse semper dolor ligula. Praesent pellentesque suscipit
-                                enim, at
-                                dictum nisl pellentesque non. Phasellus nec consectetur magna. Interdum et malesuada
-                                fames
-                                ac
-                                ante ipsum primis in faucibus. Sed condimentum porttitor elit ut dignissim. Nunc nec
-                                libero
-                                a
-                                orci porttitor accumsan eget sed diam. Cras dignissim, nulla sed laoreet accumsan, mi
-                                quam
-                                egestas mauris, id posuere purus lorem sagittis purus. Duis sollicitudin neque ac
-                                aliquet
-                                sollicitudin.
-                                In eros est, sollicitudin sit amet risus eget, porttitor pulvinar ipsum. Nulla eget quam
-                                arcu.
-                                Mauris vel odio cursus, hendrerit augue et, ultricies massa. Phasellus pharetra et
-                                libero id
-                                semper. Sed sollicitudin commodo mi, nec efficitur sem congue vitae. Ut pellentesque
-                                augue
-                                ut
-                                lacus finibus sollicitudin. Donec a auctor augue. Orci varius natoque penatibus et
-                                magnis
-                                dis
-                                parturient montes, nascetur ridiculus mus. Nullam vitae convallis nulla. Maecenas
-                                venenatis
-                                lorem at mi commodo pharetra. Mauris finibus hendrerit magna, sit amet ultrices turpis
-                                aliquet
-                                nec. Proin et diam suscipit, sollicitudin risus ac, porta nibh.
-                            </Text>
+
+                            <Text style={styles.preparation}>{this.state.drink.instructions}</Text>
 
                         </View>
                     </View>

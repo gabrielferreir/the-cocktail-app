@@ -30,13 +30,18 @@ export default class Service {
             .map(item => drink[item]);
     }
 
+    mergeIngredientsWithMesure(drink) {
+        const ingredients = this.getIngredients(drink);
+        const measure = this.getMeasure(drink);
+        return ingredients.map((ingredient, index) => ({name: ingredient, measure: measure[index]}));
+    }
+
     transformDrink(drink) {
         return {
             id: drink.idDrink,
             name: drink.strDrink,
             image: drink.strDrinkThumb,
-            ingredients: this.getIngredients(drink),
-            measures: this.getMeasure(drink),
+            ingredients: this.mergeIngredientsWithMesure(drink),
             instructions: drink.strInstructions,
             alcoholic: drink.strAlcoholic === 'Alcoholic',
             category: drink.strCategory
