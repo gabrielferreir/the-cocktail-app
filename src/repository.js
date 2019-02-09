@@ -5,5 +5,9 @@ export default class Repository {
             .then(response => response.json());
     }
 
+    async getDrinkById(id) {
+        return await fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`)
+            .then(response => response.json());
+    }
 
 }

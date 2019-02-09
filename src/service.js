@@ -10,6 +10,12 @@ export default class Service {
             .then(drink => this.transformDrink(drink));
     }
 
+    async getDrinkById(id) {
+        return await this.repository.getDrinkById(id)
+            .then(response => response.drinks[0])
+            .then(drink => this.transformDrink(drink));
+    }
+
     getIngredients(drink) {
         return Object.keys(drink)
             .filter(item => item.indexOf('strIngredient') > -1)

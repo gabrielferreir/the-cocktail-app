@@ -11,6 +11,7 @@ import {
     Image
 } from 'react-native';
 import {Text, Icon, Card} from 'native-base';
+import Service from "./service";
 
 
 const HEADER_EXPANDED_HEIGHT = 320;
@@ -19,12 +20,28 @@ const HEADER_COLLAPSED_HEIGHT = 60;
 const SCREEN_WIDTH = Dimensions.get("screen").width;
 
 export default class Detail extends Component {
+
+    service = new Service();
+
     constructor() {
         super();
 
         this.state = {
+            drink: {},
             scrollY: new Animated.Value(0)
-        }
+        };
+    }
+
+    componentDidMount() {
+        const id = this.props.navigation.getParam('itemId', null);
+        this.get(id);
+    }
+
+    async get(id) {
+        const item = await this.service.getDrinkById(id);
+        this.setState({
+            drink: item
+        });
     }
 
     render() {
@@ -39,7 +56,7 @@ export default class Detail extends Component {
 
                 <Animated.View style={[styles.header, {height: headerHeight}]}>
                     <Image
-                        source={{uri: "https://www.thecocktaildb.com/images/media/drink/qtvvyq1439905913.jpg"}}
+                        source={{uri: this.state.drink.image}}
                         style={styles.backgroundImage}/>
                     <TouchableOpacity onPress={() => this.props.navigation.navigate('Home')} style={styles.icon}>
                         <Icon type='MaterialIcons'
@@ -66,7 +83,7 @@ export default class Detail extends Component {
 
                         <View>
                             <Text style={styles.subtitle}>Nome</Text>
-                            <Text style={styles.title}>Margarita</Text>
+                            <Text style={styles.title}>{this.state.drink.name}</Text>
                         </View>
 
                     </View>

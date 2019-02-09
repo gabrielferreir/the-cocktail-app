@@ -196,7 +196,9 @@ export default class Home extends Component<Props> {
 
                                         </View>
 
-                                        <TouchableOpacity onPress={() => this.props.navigation.navigate('Detail')}>
+                                        <TouchableOpacity onPress={() => this.props.navigation.navigate('Detail', {
+                                            itemId: item.id
+                                        })}>
                                             <Icon type='MaterialIcons'
                                                   name='arrow-forward' style={{marginRight: 16}}/>
                                         </TouchableOpacity>
