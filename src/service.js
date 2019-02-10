@@ -16,9 +16,21 @@ export default class Service {
             .then(drink => this.transformDrink(drink));
     }
 
-    async search(string, byName) {
-        const query = byName ? `s=${string}` : `i=${string}`;
-        return await this.repository.searchDrinks(query);
+    async search(string) {
+        const query = `s=${string}`;
+        return await this.repository.searchDrinks(query)
+            .then(response => (response.drinks || [])
+                .map(response => this.transformDrink(response))
+            );
+    }
+
+    async filter(string, type) {
+        let query = `${type}=${string}`;
+        console.warn(query);
+        return await this.repository.filterDrinks(query)
+            .then(response =>
+                (response.drinks || [])
+                    .map(response => this.transformDrink(response)));
     }
 
     getIngredients(drink) {
