@@ -58,6 +58,11 @@ export default class Home extends Component<Props> {
         ).start();
     };
 
+    search = async () => {
+        const result = await this.service.search('mar', true);
+        console.warn(result);
+    };
+
     categories = [
         {
             name: "Ordinary Drink",
@@ -105,11 +110,6 @@ export default class Home extends Component<Props> {
         }
     ];
 
-    search() {
-        console.warn('search');
-    }
-
-
     render() {
         return (
             <Container>
@@ -122,7 +122,9 @@ export default class Home extends Component<Props> {
 
                             <Right>
                                 <View style={{flex: 1, flexDirection: 'row', alignItems: 'center'}}>
-                                    <Icon name='search' style={{marginRight: 16}}/>
+                                    <TouchableOpacity onPress={this.search}>
+                                        <Icon name='search' style={{marginRight: 16}}/>
+                                    </TouchableOpacity>
                                     <TouchableOpacity onPress={this.toogleFilter}>
                                         <Icon type='MaterialIcons' name='filter-list' style={{marginRight: 16}}/>
                                     </TouchableOpacity>

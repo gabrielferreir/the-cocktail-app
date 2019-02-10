@@ -10,8 +10,14 @@ export default class Repository {
             .then(response => response.json());
     }
 
-    async getDrinks(params) {
+    async searchDrinks(query) {
+        return await fetch(`https://www.thecocktaildb.com/api/json/v1/1/search.php?${query}`)
+            .then(response => response.json());
+    }
 
+    async filterDrinks(query) {
+        return await fetch(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?${query}`)
+            .then(response => response.json());
     }
 
 }

@@ -16,6 +16,11 @@ export default class Service {
             .then(drink => this.transformDrink(drink));
     }
 
+    async search(string, byName) {
+        const query = byName ? `s=${string}` : `i=${string}`;
+        return await this.repository.searchDrinks(query);
+    }
+
     getIngredients(drink) {
         return Object.keys(drink)
             .filter(item => item.indexOf('strIngredient') > -1)
@@ -46,10 +51,6 @@ export default class Service {
             alcoholic: drink.strAlcoholic === 'Alcoholic',
             category: drink.strCategory
         }
-    }
-
-    search() {
-
     }
 
 }
