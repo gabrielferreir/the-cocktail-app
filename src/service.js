@@ -48,4 +48,8 @@ export default class Service {
         }
     }
 
+    search() {
+
+    }
+
 }

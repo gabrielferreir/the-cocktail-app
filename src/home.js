@@ -1,7 +1,18 @@
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View, ScrollView, FlatList, TouchableOpacity, Image} from 'react-native';
+import {
+    Platform,
+    StyleSheet,
+    Text,
+    View,
+    ScrollView,
+    FlatList,
+    TouchableOpacity,
+    Image,
+    Animated,
+    Easing
+} from 'react-native';
 import {Container, Header, Title, Button, Left, Right, Body, Icon} from 'native-base';
-import {Content, Form, Item, Input, Label} from 'native-base';
+import {Content, Form, Item, Input, Label, Switch} from 'native-base';
 import Service from './service';
 
 export default class Home extends Component<Props> {
@@ -15,8 +26,12 @@ export default class Home extends Component<Props> {
     constructor() {
         super();
         this.state = {
-            suggestions: []
+            suggestions: [],
+            showFilter: false
         };
+
+        this.animatedValue = new Animated.Value(0);
+
         this.get();
     }
 
@@ -30,6 +45,18 @@ export default class Home extends Component<Props> {
             });
         }
     }
+
+    toogleFilter = () => {
+        const {showFilter} = this.state;
+        this.setState({showFilter: !showFilter});
+        Animated.timing(
+            this.animatedValue, {
+                toValue: showFilter ? 120 : 0,
+                duration: 300,
+                easing: Easing.bounce
+            }
+        ).start();
+    };
 
     categories = [
         {
@@ -78,6 +105,10 @@ export default class Home extends Component<Props> {
         }
     ];
 
+    search() {
+        console.warn('search');
+    }
+
 
     render() {
         return (
@@ -87,16 +118,74 @@ export default class Home extends Component<Props> {
 
                     <Form>
                         <Item inlineLabel>
-                            <Label>Pesquisar</Label>
-                            <Input/>
+                            <Input placeholder="Search" onSubmitEditing={this.search}/>
+
                             <Right>
                                 <View style={{flex: 1, flexDirection: 'row', alignItems: 'center'}}>
                                     <Icon name='search' style={{marginRight: 16}}/>
-                                    <Icon type='MaterialIcons' name='filter-list' style={{marginRight: 16}}/>
+                                    <TouchableOpacity onPress={this.toogleFilter}>
+                                        <Icon type='MaterialIcons' name='filter-list' style={{marginRight: 16}}/>
+                                    </TouchableOpacity>
                                 </View>
                             </Right>
                         </Item>
                     </Form>
+
+                    <Animated.View style={{
+                        height: this.animatedValue, overflow: 'hidden'
+                    }}>
+                        <View
+                            style={{display: 'flex', flexDirection: 'row', paddingHorizontal: 32, paddingVertical: 16}}>
+                            <View style={{flex: 1, flexDirection: 'row', justifyContent: 'center'}}>
+                                <View style={{flex: 1}}>
+                                    <Text style={{fontSize: 14, color: 'rgba(0,0,0,.87)'}}>Alcoholic</Text>
+                                    <Text>Yes</Text>
+                                </View>
+                                <Switch value={false}/>
+                            </View>
+                            <View style={{flex: 1, flexDirection: 'row', justifyContent: 'center'}}>
+                                <View style={{flex: 1}}>
+                                    <Text style={{fontSize: 14, color: 'rgba(0,0,0,.87)'}}>Search by</Text>
+                                    <Text>Name</Text>
+                                </View>
+                                <Switch value={false}/>
+                            </View>
+                        </View>
+
+                        <View style={{
+                            height: 48,
+                            alignItems: 'center'
+                        }}>
+                            <ScrollView
+                                alwaysBounceVertical={true}
+                                scrollEventThrottle={16}
+                                horizontal={true}>
+                                <FlatList
+                                    horizontal={true}
+                                    data={this.categories}
+                                    renderItem={({item}) =>
+                                        <View style={{
+                                            paddingHorizontal: 16,
+                                            borderRadius: 12,
+                                            marginHorizontal: 8,
+                                            backgroundColor: '#CDCDCD',
+                                            height: 28,
+                                            alignItems: 'center',
+                                            justifyContent: 'center'
+                                        }}>
+                                            <Text style={{
+                                                fontSize: 14,
+                                                color: '#000',
+                                                textAlign: 'center'
+                                            }}>{item.name}</Text>
+                                        </View>
+                                    }
+                                />
+                            </ScrollView>
+                        </View>
+
+                    </Animated.View>
+
                     <View style={{
                         flex: 1,
                         alignItems: 'center',

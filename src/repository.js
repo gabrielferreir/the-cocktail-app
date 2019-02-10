@@ -10,4 +10,8 @@ export default class Repository {
             .then(response => response.json());
     }
 
+    async getDrinks(params) {
+
+    }
+
 }
