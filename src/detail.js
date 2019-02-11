@@ -39,7 +39,6 @@ export default class Detail extends Component {
 
     async get(id) {
         const item = await this.service.getDrinkById(id);
-        console.warn(item);
         this.setState({
             drink: item
         });

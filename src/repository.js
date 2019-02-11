@@ -11,7 +11,6 @@ export default class Repository {
     }
 
     async searchDrinks(query) {
-        console.warn(`https://www.thecocktaildb.com/api/json/v1/1/search.php?${query}`);
         return await fetch(`https://www.thecocktaildb.com/api/json/v1/1/search.php?${query}`)
             .then(response => response.json());
     }
@@ -19,6 +18,15 @@ export default class Repository {
     async filterDrinks(query) {
         return await fetch(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?${query}`)
             .then(response => response.json());
+    }
+
+    async getGlasses() {
+        return await fetch(`https://www.thecocktaildb.com/api/json/v1/1/list.php?g=list`)
+            .then(response => response.json())
+            .then(log => {
+                console.warn(log);
+                return log;
+            });
     }
 
 }

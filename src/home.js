@@ -11,13 +11,14 @@ import {
     Animated,
     Easing
 } from 'react-native';
-import {Container, Header, Title, Button, Left, Right, Body, Icon} from 'native-base';
-import {Content, Form, Item, Input, Label, Switch} from 'native-base';
+import {Container, Right, Body, Icon} from 'native-base';
+import {Form, Item, Input, Switch} from 'native-base';
 import Service from './service';
 
 export default class Home extends Component<Props> {
 
     service = new Service();
+    suggestions = [];
 
     static navigationOptions = {
         title: 'Home',
@@ -27,21 +28,69 @@ export default class Home extends Component<Props> {
         super();
         this.state = {
             drinks: [],
+            glasses: [],
+            categories: [
+                {
+                    name: "Ordinary Drink",
+                    color: '#d81b60'
+                },
+                {
+                    name: "Cocktail",
+                    color: '#8e24aa'
+                },
+                {
+                    name: "Milk / Float / Shake",
+                    color: '#5e35b1'
+                },
+                {
+                    name: "Other/Unknown",
+                    color: '#3949ab'
+                },
+                {
+                    name: "Cocoa",
+                    color: '#1e88e5'
+                },
+                {
+                    name: "Shot",
+                    color: '#039be5'
+                },
+                {
+                    name: "Coffee / Tea",
+                    color: '#00acc1'
+                },
+                {
+                    name: "Homemade Liqueur",
+                    color: '#00897b'
+                },
+                {
+                    name: "Punch / Party Drink",
+                    color: '#43a047'
+                },
+                {
+                    name: "Beer",
+                    color: '#7cb342'
+                },
+                {
+                    name: "Soft Drink / Soda",
+                    color: '#c0ca33'
+                }
+            ],
             showFilter: false,
             search: '',
             searchByIngredients: false,
-            researched: false,
-            filterAlcoholic: false
+            typeSearch: null
         };
 
         this.animatedValue = new Animated.Value(0);
 
         this.get();
+        this.getGlasses();
     }
 
     async get() {
         for (let i = 0; i < 8; i++) {
             const item = await this.service.getRandomDrink();
+            this.suggestions.push(item);
             this.setState({
                 drinks: [
                     ...this.state.drinks,
@@ -50,12 +99,20 @@ export default class Home extends Component<Props> {
         }
     }
 
+    async getGlasses() {
+        const glasses = await this.service.getGlasses();
+        console.warn('getGlasses', glasses);
+        this.setState({
+            glasses: glasses
+        });
+    }
+
     toogleFilter = () => {
         const {showFilter} = this.state;
         this.setState({showFilter: !showFilter});
         Animated.timing(
             this.animatedValue, {
-                toValue: showFilter ? 120 : 0,
+                toValue: showFilter ? 180 : 0,
                 duration: 300,
                 easing: Easing.bounce
             }
@@ -66,71 +123,66 @@ export default class Home extends Component<Props> {
         let result = [];
         if (!this.state.searchByIngredients) {
             result = await this.service.search(this.state.search);
-            console.warn(result);
         } else {
             result = await this.service.filter(this.state.search, 'i')
         }
         this.setState({
             drinks: result,
-            researched: true
+            typeSearch: 's'
         });
     };
 
-    filter = async (category) => {
+    filterCategories = async (item, index) => {
+        const newCategories = this.clearCategories();
+        newCategories.splice(index, 1, {...item, checked: true});
 
-        const result = await this.service.filter(category, 'c');
         this.setState({
-            drinks: result,
-            researched: true
+            typeSearch: 'c',
+            categories: newCategories
+        });
+        const result = await this.service.filter(item.name, 'c');
+        this.setState({
+            drinks: result
+        });
+
+    };
+
+    filterGlass = async (item, index) => {
+
+        this.setState({
+            typeSearch: 'g'
+            // categories: newCategories
+        });
+
+        const result = await this.service.filter(item.name, 'g');
+        this.setState({
+            drinks: result
         });
     };
 
-    categories = [
-        {
-            name: "Ordinary Drink",
-            color: '#d81b60'
-        },
-        {
-            name: "Cocktail",
-            color: '#8e24aa'
-        },
-        {
-            name: "Milk / Float / Shake",
-            color: '#5e35b1'
-        },
-        {
-            name: "Other/Unknown",
-            color: '#3949ab'
-        },
-        {
-            name: "Cocoa",
-            color: '#1e88e5'
-        },
-        {
-            name: "Shot",
-            color: '#039be5'
-        },
-        {
-            name: "Coffee / Tea",
-            color: '#00acc1'
-        },
-        {
-            name: "Homemade Liqueur",
-            color: '#00897b'
-        },
-        {
-            name: "Punch / Party Drink",
-            color: '#43a047'
-        },
-        {
-            name: "Beer",
-            color: '#7cb342'
-        },
-        {
-            name: "Soft Drink / Soda",
-            color: '#c0ca33'
+    clearCategories = () => {
+        return JSON.parse(JSON.stringify(this.state.categories))
+            .map(item => ({...item, checked: false}));
+    };
+
+    clearFilters = () => {
+        this.setState({
+            showFilter: false,
+            search: '',
+            searchByIngredients: false,
+            typeSearch: null,
+            categories: this.clearCategories(),
+            drinks: this.suggestions
+        });
+    };
+
+    colorCategory = (typeSearch, checked) => {
+        if (typeSearch === 'c') {
+            return checked;
+        } else {
+            return true;
         }
-    ];
+    };
 
     render() {
         return (
@@ -161,7 +213,7 @@ export default class Home extends Component<Props> {
                         height: this.animatedValue, overflow: 'hidden'
                     }}>
                         <View
-                            style={{display: 'flex', flexDirection: 'row', paddingHorizontal: 32, paddingVertical: 16}}>
+                            style={{display: 'flex', flexDirection: 'row', paddingHorizontal: 16, paddingTop: 16}}>
                             <View style={{flex: 1, flexDirection: 'row', justifyContent: 'center'}}>
                                 <View style={{flex: 1}}>
                                     <Text style={{fontSize: 14, color: 'rgba(0,0,0,.87)'}}>Search by</Text>
@@ -171,18 +223,18 @@ export default class Home extends Component<Props> {
                                     searchByIngredients: value
                                 })} value={this.state.searchByIngredients}/>
                             </View>
-                            <View style={{flex: 1, flexDirection: 'row', justifyContent: 'center'}}>
-                                {/*<View style={{flex: 1}}>*/}
-                                {/*<Text style={{fontSize: 14, color: 'rgba(0,0,0,.87)'}}>Alcoholic</Text>*/}
-                                {/*<Text>Yes</Text>*/}
-                                {/*</View>*/}
-                                {/*<Switch onValueChange={} value={false}/>*/}
-                            </View>
+                            <View style={{flex: 1}}></View>
+                        </View>
+
+                        <View
+                            style={{display: 'flex', flexDirection: 'row', paddingLeft: 16, paddingVertical: 16}}>
+                            <Text style={{fontSize: 14, color: 'rgba(0,0,0,.87)'}}>Glass</Text>
                         </View>
 
                         <View style={{
                             height: 48,
-                            alignItems: 'center'
+                            alignItems: 'center',
+                            paddingLeft: 16,
                         }}>
                             <ScrollView
                                 alwaysBounceVertical={true}
@@ -190,16 +242,16 @@ export default class Home extends Component<Props> {
                                 horizontal={true}>
                                 <FlatList
                                     horizontal={true}
-                                    data={this.categories}
-                                    renderItem={({item}) =>
+                                    data={this.state.glasses}
+                                    renderItem={({item, index}) =>
                                         <TouchableOpacity onPress={() => {
-                                            this.filter(item.name);
+                                            this.filterGlass(item, index);
                                         }}>
                                             <View style={{
                                                 paddingHorizontal: 16,
                                                 borderRadius: 12,
-                                                marginHorizontal: 8,
-                                                backgroundColor: '#CDCDCD',
+                                                marginHorizontal: 4,
+                                                backgroundColor: '#eeeeee',
                                                 height: 28,
                                                 alignItems: 'center',
                                                 justifyContent: 'center'
@@ -232,29 +284,52 @@ export default class Home extends Component<Props> {
                             horizontal={true}>
                             <FlatList
                                 horizontal={true}
-                                data={this.categories}
-                                renderItem={({item}) =>
+                                data={this.state.categories}
+                                extraData={this.state.typeSearch}
+                                renderItem={({item, index}) =>
                                     <TouchableOpacity onPress={() => {
-                                        this.filter(item.name);
+                                        this.filterCategories(item, 'c', index);
                                     }}>
                                         <View style={{
-                                            height: 80,
-                                            width: 80,
-                                            backgroundColor: item.color,
-                                            marginRight: 8,
-                                            marginLeft: 8,
+                                            height: 96,
+                                            width: 96,
                                             padding: 8,
-                                            justifyContent: 'center',
-                                            alignItems: 'center',
-                                            borderRadius: 2
+                                            position: 'relative',
                                         }}>
 
-                                            <Icon type='MaterialIcons' name='local-bar' style={{color: '#FFF'}}/>
-                                            <Text style={{
-                                                fontSize: 10,
-                                                color: '#FFF',
-                                                textAlign: 'center'
-                                            }}>{item.name}</Text>
+                                            <View style={{
+                                                flex: 1,
+                                                backgroundColor: this.colorCategory(this.state.typeSearch, item.checked) ? item.color : '#CDCDCD',
+                                                padding: 8,
+                                                justifyContent: 'center',
+                                                alignItems: 'center',
+                                                borderRadius: 2,
+                                                position: 'relative',
+                                                overflow: 'visible'
+                                            }}>
+
+                                                <Icon type='MaterialIcons' name='local-bar' style={{color: '#FFF'}}/>
+                                                <Text style={{
+                                                    fontSize: 10,
+                                                    color: '#FFF',
+                                                    textAlign: 'center'
+                                                }}>{item.name}</Text>
+
+                                            </View>
+
+                                            {item.checked && <View style={{
+                                                position: 'absolute',
+                                                top: 0,
+                                                right: 0,
+                                                zIndex: 8,
+                                                backgroundColor: '#FFF',
+                                                borderRadius: 16
+                                            }}>
+                                                <TouchableOpacity onPress={this.clearFilters}>
+                                                    <Icon type='MaterialIcons' name='clear'
+                                                          style={{color: '#000', fontSize: 18}}/>
+                                                </TouchableOpacity>
+                                            </View>}
 
                                         </View>
                                     </TouchableOpacity>
@@ -267,7 +342,7 @@ export default class Home extends Component<Props> {
                         <Text style={{
                             fontSize: 16,
                             color: 'rgba(0,0,0,.62)'
-                        }}>{this.state.researched ? 'Pesquisando por: ' + this.state.search : 'Nossas sugestões'}</Text>
+                        }}>{this.state.typeSearch === 'c' ? 'Filtrando por categoria' : this.state.typeSearch === null ? 'Nossas sugestoes' : 'Pazuzu'}</Text>
                     </View>
 
                     <View style={{paddingVertical: 16}}>

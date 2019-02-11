@@ -26,11 +26,18 @@ export default class Service {
 
     async filter(string, type) {
         let query = `${type}=${string}`;
-        console.warn(query);
         return await this.repository.filterDrinks(query)
             .then(response =>
                 (response.drinks || [])
-                    .map(response => this.transformDrink(response)));
+                    .map(response => this.transformDrink(response))
+            );
+    }
+
+    async getGlasses() {
+        return await this.repository.getGlasses()
+            .then(response => (response.drinks || [])
+                .map(glass => ({name: glass.strGlass}))
+            );
     }
 
     getIngredients(drink) {
