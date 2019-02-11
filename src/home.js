@@ -160,7 +160,7 @@ export default class Home extends Component<Props> {
         });
     };
 
-    clearCategories = () => {
+    clearCategories() {
         return JSON.parse(JSON.stringify(this.state.categories))
             .map(item => ({...item, checked: false}));
     };
@@ -288,7 +288,7 @@ export default class Home extends Component<Props> {
                                 extraData={this.state.typeSearch}
                                 renderItem={({item, index}) =>
                                     <TouchableOpacity onPress={() => {
-                                        this.filterCategories(item, 'c', index);
+                                        this.filterCategories(item, index);
                                     }}>
                                         <View style={{
                                             height: 96,
