@@ -111,7 +111,7 @@ export default class Home extends Component<Props> {
         this.setState({showFilter: !showFilter});
         Animated.timing(
             this.animatedValue, {
-                toValue: showFilter ? 180 : 0,
+                toValue: showFilter ? 260 : 0,
                 duration: 300,
                 easing: Easing.bounce
             }
@@ -314,6 +314,82 @@ export default class Home extends Component<Props> {
                                     }
                                 />
                             </ScrollView>
+                        </View>
+
+                        <View
+                            style={{display: 'flex', flexDirection: 'row', paddingLeft: 16, paddingVertical: 16}}>
+                            <Text style={{fontSize: 14, color: 'rgba(0,0,0,.87)'}}>Type</Text>
+                        </View>
+
+                        <View
+                            style={{display: 'flex', flexDirection: 'row', paddingHorizontal: 16, paddingBottom: 16}}>
+
+                            <View style={{paddingVertical: 8, position: 'relative'}}>
+                                <TouchableOpacity onPress={() => {
+                                }}>
+                                    <View style={{
+                                        paddingHorizontal: 16,
+                                        borderRadius: 12,
+                                        marginHorizontal: 4,
+                                        backgroundColor: '#fafafa',
+                                        height: 28,
+                                        alignItems: 'center',
+                                        justifyContent: 'center'
+                                    }}>
+                                        <Text style={{
+                                            fontSize: 14,
+                                            color: '#rgba(0,0,0,.61)',
+                                            textAlign: 'center'
+                                        }}>Alcoholic</Text>
+                                    </View>
+                                </TouchableOpacity>
+                                {/*<View style={{*/}
+                                {/*position: 'absolute',*/}
+                                {/*top: 0,*/}
+                                {/*right: 0,*/}
+                                {/*backgroundColor: '#f44336',*/}
+                                {/*borderRadius: 16*/}
+                                {/*}}>*/}
+                                {/*<TouchableOpacity onPress={this.clearFilters}>*/}
+                                {/*<Icon type='MaterialIcons' name='clear'*/}
+                                {/*style={{color: '#FFF', fontSize: 18}}/>*/}
+                                {/*</TouchableOpacity>*/}
+                                {/*</View>*/}
+                            </View>
+
+                            <View style={{paddingVertical: 8, position: 'relative'}}>
+                                <TouchableOpacity onPress={() => {
+                                }}>
+                                    <View style={{
+                                        paddingHorizontal: 16,
+                                        borderRadius: 12,
+                                        marginHorizontal: 4,
+                                        backgroundColor: '#fafafa',
+                                        height: 28,
+                                        alignItems: 'center',
+                                        justifyContent: 'center'
+                                    }}>
+                                        <Text style={{
+                                            fontSize: 14,
+                                            color: '#rgba(0,0,0,.61)',
+                                            textAlign: 'center'
+                                        }}>Alcoholic</Text>
+                                    </View>
+                                </TouchableOpacity>
+                                {/*<View style={{*/}
+                                {/*position: 'absolute',*/}
+                                {/*top: 0,*/}
+                                {/*right: 0,*/}
+                                {/*backgroundColor: '#f44336',*/}
+                                {/*borderRadius: 16*/}
+                                {/*}}>*/}
+                                {/*<TouchableOpacity onPress={this.clearFilters}>*/}
+                                {/*<Icon type='MaterialIcons' name='clear'*/}
+                                {/*style={{color: '#FFF', fontSize: 18}}/>*/}
+                                {/*</TouchableOpacity>*/}
+                                {/*</View>*/}
+                            </View>
+
                         </View>
 
                     </Animated.View>
