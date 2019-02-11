@@ -101,7 +101,6 @@ export default class Home extends Component<Props> {
 
     async getGlasses() {
         const glasses = await this.service.getGlasses();
-        console.warn('getGlasses', glasses);
         this.setState({
             glasses: glasses
         });
@@ -123,16 +122,17 @@ export default class Home extends Component<Props> {
         let result = [];
         if (!this.state.searchByIngredients) {
             result = await this.service.search(this.state.search);
+            this.setState({typeSearch: 's'});
         } else {
+            this.setState({typeSearch: 'i'});
             result = await this.service.filter(this.state.search, 'i')
         }
-        this.setState({
-            drinks: result,
-            typeSearch: 's'
-        });
+        this.setState({drinks: result});
     };
 
     filterCategories = async (item, index) => {
+        this.clearFilters();
+
         const newCategories = this.clearCategories();
         newCategories.splice(index, 1, {...item, checked: true});
 
@@ -148,10 +148,14 @@ export default class Home extends Component<Props> {
     };
 
     filterGlass = async (item, index) => {
+        this.clearFilters();
+
+        const newGlasses = this.clearGlasses();
+        newGlasses.splice(index, 1, {...item, checked: true});
 
         this.setState({
-            typeSearch: 'g'
-            // categories: newCategories
+            typeSearch: 'g',
+            glasses: newGlasses
         });
 
         const result = await this.service.filter(item.name, 'g');
@@ -165,6 +169,11 @@ export default class Home extends Component<Props> {
             .map(item => ({...item, checked: false}));
     };
 
+    clearGlasses() {
+        return JSON.parse(JSON.stringify(this.state.glasses))
+            .map(item => ({...item, checked: false}));
+    };
+
     clearFilters = () => {
         this.setState({
             showFilter: false,
@@ -172,6 +181,7 @@ export default class Home extends Component<Props> {
             searchByIngredients: false,
             typeSearch: null,
             categories: this.clearCategories(),
+            glasses: this.clearGlasses(),
             drinks: this.suggestions
         });
     };
@@ -181,6 +191,29 @@ export default class Home extends Component<Props> {
             return checked;
         } else {
             return true;
+        }
+    };
+
+    colorGlasses = (typeSearch, checked) => {
+        if (typeSearch === 'g') {
+            return checked;
+        } else {
+            return true;
+        }
+    };
+
+    message(typeSearch) {
+        switch (typeSearch) {
+            case 'c':
+                return 'Searching by: Category';
+            case 'g':
+                return 'Searching by: Glass';
+            case 'i':
+                return 'Searching by: Ingredient';
+            case 's':
+                return 'Searching by: Name';
+            default:
+                return 'Our Suggestions';
         }
     };
 
@@ -244,25 +277,40 @@ export default class Home extends Component<Props> {
                                     horizontal={true}
                                     data={this.state.glasses}
                                     renderItem={({item, index}) =>
-                                        <TouchableOpacity onPress={() => {
-                                            this.filterGlass(item, index);
-                                        }}>
-                                            <View style={{
-                                                paddingHorizontal: 16,
-                                                borderRadius: 12,
-                                                marginHorizontal: 4,
-                                                backgroundColor: '#eeeeee',
-                                                height: 28,
-                                                alignItems: 'center',
-                                                justifyContent: 'center'
+                                        <View style={{paddingVertical: 8, position: 'relative'}}>
+                                            <TouchableOpacity onPress={() => {
+                                                this.filterGlass(item, index);
                                             }}>
-                                                <Text style={{
-                                                    fontSize: 14,
-                                                    color: '#000',
-                                                    textAlign: 'center'
-                                                }}>{item.name}</Text>
-                                            </View>
-                                        </TouchableOpacity>
+                                                <View style={{
+                                                    paddingHorizontal: 16,
+                                                    borderRadius: 12,
+                                                    marginHorizontal: 4,
+                                                    backgroundColor: this.colorGlasses(this.state.typeSearch, item.checked) ? '#eeeeee' : '#fafafa',
+                                                    height: 28,
+                                                    alignItems: 'center',
+                                                    justifyContent: 'center'
+                                                }}>
+                                                    <Text style={{
+                                                        fontSize: 14,
+                                                        color: this.colorGlasses(this.state.typeSearch, item.checked) ? 'rgba(0,0,0,.87)' : '#rgba(0,0,0,.61)',
+                                                        textAlign: 'center'
+                                                    }}>{item.name}</Text>
+                                                </View>
+                                            </TouchableOpacity>
+                                            {item.checked && <View style={{
+                                                position: 'absolute',
+                                                top: 0,
+                                                right: 0,
+                                                zIndex: 8,
+                                                backgroundColor: '#f44336',
+                                                borderRadius: 16
+                                            }}>
+                                                <TouchableOpacity onPress={this.clearFilters}>
+                                                    <Icon type='MaterialIcons' name='clear'
+                                                          style={{color: '#FFF', fontSize: 18}}/>
+                                                </TouchableOpacity>
+                                            </View>}
+                                        </View>
                                     }
                                 />
                             </ScrollView>
@@ -342,7 +390,7 @@ export default class Home extends Component<Props> {
                         <Text style={{
                             fontSize: 16,
                             color: 'rgba(0,0,0,.62)'
-                        }}>{this.state.typeSearch === 'c' ? 'Filtrando por categoria' : this.state.typeSearch === null ? 'Nossas sugestoes' : 'Pazuzu'}</Text>
+                        }}>{this.message(this.state.typeSearch)}</Text>
                     </View>
 
                     <View style={{paddingVertical: 16}}>
