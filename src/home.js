@@ -306,111 +306,14 @@ export default class Home extends Component<Props> {
                             <Text style={{fontSize: 14, color: 'rgba(0,0,0,.87)'}}>Glass</Text>
                         </View>
 
-                        <View style={{
-                            height: 48,
-                            alignItems: 'center',
-                            paddingLeft: 16,
-                        }}>
-                            <ScrollView
-                                alwaysBounceVertical={true}
-                                scrollEventThrottle={16}
-                                horizontal={true}>
-                                <FlatList
-                                    horizontal={true}
-                                    data={this.state.glasses}
-                                    renderItem={({item, index}) =>
-                                        <View style={{paddingVertical: 8, position: 'relative'}}>
-                                            <TouchableOpacity onPress={() => {
-                                                this.filterGlass(item, index);
-                                            }}>
-                                                <View style={{
-                                                    paddingHorizontal: 16,
-                                                    borderRadius: 12,
-                                                    marginHorizontal: 4,
-                                                    backgroundColor: this.colorGlasses(this.state.typeSearch, item.checked) ? '#eeeeee' : '#fafafa',
-                                                    height: 28,
-                                                    alignItems: 'center',
-                                                    justifyContent: 'center'
-                                                }}>
-                                                    <Text style={{
-                                                        fontSize: 14,
-                                                        color: this.colorGlasses(this.state.typeSearch, item.checked) ? 'rgba(0,0,0,.87)' : '#rgba(0,0,0,.61)',
-                                                        textAlign: 'center'
-                                                    }}>{item.name}</Text>
-                                                </View>
-                                            </TouchableOpacity>
-                                            {item.checked && <View style={{
-                                                position: 'absolute',
-                                                top: 0,
-                                                right: 0,
-                                                zIndex: 8,
-                                                backgroundColor: '#f44336',
-                                                borderRadius: 16
-                                            }}>
-                                                <TouchableOpacity onPress={this.clearFilters}>
-                                                    <Icon type='MaterialIcons' name='clear'
-                                                          style={{color: '#FFF', fontSize: 18}}/>
-                                                </TouchableOpacity>
-                                            </View>}
-                                        </View>
-                                    }
-                                />
-                            </ScrollView>
-                        </View>
+                        {this.renderFilter(this.state.glasses, this.filterGlass, this.colorGlasses)}
 
                         <View
-                            style={{display: 'flex', flexDirection: 'row', paddingLeft: 16, paddingVertical: 16}}>
-                            <Text style={{fontSize: 14, color: 'rgba(0,0,0,.87)'}}>Type</Text>
+                            style={{display: 'flex', flexDirection: 'row', paddingLeft: 16, paddingBottom: 16}}>
+                            <Text style={{fontSize: 14, color: 'rgba(0,0,0,.87)'}}>Alcohol content</Text>
                         </View>
 
-                        <View
-                            style={{display: 'flex', flexDirection: 'row', paddingHorizontal: 16, paddingBottom: 16}}>
-
-                            <ScrollView
-                                alwaysBounceVertical={true}
-                                scrollEventThrottle={16}
-                                horizontal={true}>
-                                <FlatList
-                                    horizontal={true}
-                                    data={this.state.alcoholic}
-                                    renderItem={({item, index}) =>
-                                        <View style={{paddingVertical: 8, position: 'relative'}}>
-                                            <TouchableOpacity onPress={() => {
-                                                this.filterAlcoholic(item, index)
-                                            }}>
-                                                <View style={{
-                                                    paddingHorizontal: 16,
-                                                    borderRadius: 12,
-                                                    marginHorizontal: 4,
-                                                    backgroundColor: this.colorAlcoholic(this.state.typeSearch, item.checked) ? '#eeeeee' : '#fafafa',
-                                                    height: 28,
-                                                    alignItems: 'center',
-                                                    justifyContent: 'center'
-                                                }}>
-                                                    <Text style={{
-                                                        fontSize: 14,
-                                                        color: this.colorAlcoholic(this.state.typeSearch, item.checked) ? 'rgba(0,0,0,.87)' : '#rgba(0,0,0,.61)',
-                                                        textAlign: 'center'
-                                                    }}>{item.name}</Text>
-                                                </View>
-                                            </TouchableOpacity>
-                                            {item.checked && <View style={{
-                                                position: 'absolute',
-                                                top: 0,
-                                                right: 0,
-                                                zIndex: 8,
-                                                backgroundColor: '#f44336',
-                                                borderRadius: 16
-                                            }}>
-                                                <TouchableOpacity onPress={this.clearFilters}>
-                                                    <Icon type='MaterialIcons' name='clear'
-                                                          style={{color: '#FFF', fontSize: 18}}/>
-                                                </TouchableOpacity>
-                                            </View>}
-                                        </View>
-                                    }/>
-                            </ScrollView>
-                        </View>
+                        {this.renderFilter(this.state.alcoholic, this.filterAlcoholic, this.colorAlcoholic)}
 
                     </Animated.View>
 
@@ -563,5 +466,58 @@ export default class Home extends Component<Props> {
 
             </Container>
         );
+    }
+
+    renderFilter(list, search, color) {
+        return (
+            <View
+                style={{display: 'flex', flexDirection: 'row', paddingHorizontal: 16, paddingBottom: 16}}>
+
+                <ScrollView
+                    alwaysBounceVertical={true}
+                    scrollEventThrottle={16}
+                    horizontal={true}>
+                    <FlatList
+                        horizontal={true}
+                        data={list}
+                        renderItem={({item, index}) =>
+                            <View style={{paddingVertical: 8, position: 'relative'}}>
+                                <TouchableOpacity onPress={() => {
+                                    search(item, index)
+                                }}>
+                                    <View style={{
+                                        paddingHorizontal: 16,
+                                        borderRadius: 12,
+                                        marginHorizontal: 4,
+                                        backgroundColor: color(this.state.typeSearch, item.checked) ? '#eeeeee' : '#fafafa',
+                                        height: 28,
+                                        alignItems: 'center',
+                                        justifyContent: 'center'
+                                    }}>
+                                        <Text style={{
+                                            fontSize: 14,
+                                            color: color(this.state.typeSearch, item.checked) ? 'rgba(0,0,0,.87)' : '#rgba(0,0,0,.61)',
+                                            textAlign: 'center'
+                                        }}>{item.name}</Text>
+                                    </View>
+                                </TouchableOpacity>
+                                {item.checked && <View style={{
+                                    position: 'absolute',
+                                    top: 0,
+                                    right: 0,
+                                    zIndex: 8,
+                                    backgroundColor: '#f44336',
+                                    borderRadius: 16
+                                }}>
+                                    <TouchableOpacity onPress={this.clearFilters}>
+                                        <Icon type='MaterialIcons' name='clear'
+                                              style={{color: '#FFF', fontSize: 18}}/>
+                                    </TouchableOpacity>
+                                </View>}
+                            </View>
+                        }/>
+                </ScrollView>
+            </View>
+        )
     }
 }
