@@ -34,9 +34,17 @@ export default class Service {
     }
 
     async getGlasses() {
-        return await this.repository.getGlasses()
+        return await this.repository.getList('g')
             .then(response => (response.drinks || [])
                 .map(glass => ({name: glass.strGlass}))
+            );
+    }
+
+    async getAlcoholic() {
+        return await this.repository.getList('a')
+            .then(response => (response.drinks || [])
+                .filter(alcoholic => alcoholic.strAlcoholic)
+                .map(alcoholic => ({name: alcoholic.strAlcoholic}))
             );
     }
 

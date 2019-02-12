@@ -75,6 +75,7 @@ export default class Home extends Component<Props> {
                     color: '#c0ca33'
                 }
             ],
+            alcoholic: [],
             showFilter: false,
             search: '',
             searchByIngredients: false,
@@ -85,6 +86,7 @@ export default class Home extends Component<Props> {
 
         this.get();
         this.getGlasses();
+        this.getAlcoholic();
     }
 
     async get() {
@@ -103,6 +105,13 @@ export default class Home extends Component<Props> {
         const glasses = await this.service.getGlasses();
         this.setState({
             glasses: glasses
+        });
+    }
+
+    async getAlcoholic() {
+        const alcoholic = await this.service.getAlcoholic();
+        this.setState({
+            alcoholic: alcoholic
         });
     }
 
@@ -164,6 +173,23 @@ export default class Home extends Component<Props> {
         });
     };
 
+    filterAlcoholic = async (item, index) => {
+        this.clearAlcoholic();
+
+        const newAlcoholic = this.clearAlcoholic();
+        newAlcoholic.splice(index, 1, {...item, checked: true});
+
+        this.setState({
+            typeSearch: 'a',
+            alcoholic: newAlcoholic
+        });
+
+        const result = await this.service.filter(item.name, 'a');
+        this.setState({
+            drinks: result
+        });
+    };
+
     clearCategories() {
         return JSON.parse(JSON.stringify(this.state.categories))
             .map(item => ({...item, checked: false}));
@@ -171,6 +197,11 @@ export default class Home extends Component<Props> {
 
     clearGlasses() {
         return JSON.parse(JSON.stringify(this.state.glasses))
+            .map(item => ({...item, checked: false}));
+    };
+
+    clearAlcoholic() {
+        return JSON.parse(JSON.stringify(this.state.alcoholic))
             .map(item => ({...item, checked: false}));
     };
 
@@ -182,6 +213,7 @@ export default class Home extends Component<Props> {
             typeSearch: null,
             categories: this.clearCategories(),
             glasses: this.clearGlasses(),
+            alcoholic: this.clearAlcoholic(),
             drinks: this.suggestions
         });
     };
@@ -202,12 +234,22 @@ export default class Home extends Component<Props> {
         }
     };
 
+    colorAlcoholic = (typeSearch, checked) => {
+        if (typeSearch === 'a') {
+            return checked;
+        } else {
+            return true;
+        }
+    };
+
     message(typeSearch) {
         switch (typeSearch) {
             case 'c':
                 return 'Searching by: Category';
             case 'g':
                 return 'Searching by: Glass';
+            case 'a':
+                return 'Searching by: Alcohol content';
             case 'i':
                 return 'Searching by: Ingredient';
             case 's':
@@ -324,72 +366,50 @@ export default class Home extends Component<Props> {
                         <View
                             style={{display: 'flex', flexDirection: 'row', paddingHorizontal: 16, paddingBottom: 16}}>
 
-                            <View style={{paddingVertical: 8, position: 'relative'}}>
-                                <TouchableOpacity onPress={() => {
-                                }}>
-                                    <View style={{
-                                        paddingHorizontal: 16,
-                                        borderRadius: 12,
-                                        marginHorizontal: 4,
-                                        backgroundColor: '#fafafa',
-                                        height: 28,
-                                        alignItems: 'center',
-                                        justifyContent: 'center'
-                                    }}>
-                                        <Text style={{
-                                            fontSize: 14,
-                                            color: '#rgba(0,0,0,.61)',
-                                            textAlign: 'center'
-                                        }}>Alcoholic</Text>
-                                    </View>
-                                </TouchableOpacity>
-                                {/*<View style={{*/}
-                                {/*position: 'absolute',*/}
-                                {/*top: 0,*/}
-                                {/*right: 0,*/}
-                                {/*backgroundColor: '#f44336',*/}
-                                {/*borderRadius: 16*/}
-                                {/*}}>*/}
-                                {/*<TouchableOpacity onPress={this.clearFilters}>*/}
-                                {/*<Icon type='MaterialIcons' name='clear'*/}
-                                {/*style={{color: '#FFF', fontSize: 18}}/>*/}
-                                {/*</TouchableOpacity>*/}
-                                {/*</View>*/}
-                            </View>
-
-                            <View style={{paddingVertical: 8, position: 'relative'}}>
-                                <TouchableOpacity onPress={() => {
-                                }}>
-                                    <View style={{
-                                        paddingHorizontal: 16,
-                                        borderRadius: 12,
-                                        marginHorizontal: 4,
-                                        backgroundColor: '#fafafa',
-                                        height: 28,
-                                        alignItems: 'center',
-                                        justifyContent: 'center'
-                                    }}>
-                                        <Text style={{
-                                            fontSize: 14,
-                                            color: '#rgba(0,0,0,.61)',
-                                            textAlign: 'center'
-                                        }}>Alcoholic</Text>
-                                    </View>
-                                </TouchableOpacity>
-                                {/*<View style={{*/}
-                                {/*position: 'absolute',*/}
-                                {/*top: 0,*/}
-                                {/*right: 0,*/}
-                                {/*backgroundColor: '#f44336',*/}
-                                {/*borderRadius: 16*/}
-                                {/*}}>*/}
-                                {/*<TouchableOpacity onPress={this.clearFilters}>*/}
-                                {/*<Icon type='MaterialIcons' name='clear'*/}
-                                {/*style={{color: '#FFF', fontSize: 18}}/>*/}
-                                {/*</TouchableOpacity>*/}
-                                {/*</View>*/}
-                            </View>
-
+                            <ScrollView
+                                alwaysBounceVertical={true}
+                                scrollEventThrottle={16}
+                                horizontal={true}>
+                                <FlatList
+                                    horizontal={true}
+                                    data={this.state.alcoholic}
+                                    renderItem={({item, index}) =>
+                                        <View style={{paddingVertical: 8, position: 'relative'}}>
+                                            <TouchableOpacity onPress={() => {
+                                                this.filterAlcoholic(item, index)
+                                            }}>
+                                                <View style={{
+                                                    paddingHorizontal: 16,
+                                                    borderRadius: 12,
+                                                    marginHorizontal: 4,
+                                                    backgroundColor: this.colorAlcoholic(this.state.typeSearch, item.checked) ? '#eeeeee' : '#fafafa',
+                                                    height: 28,
+                                                    alignItems: 'center',
+                                                    justifyContent: 'center'
+                                                }}>
+                                                    <Text style={{
+                                                        fontSize: 14,
+                                                        color: this.colorAlcoholic(this.state.typeSearch, item.checked) ? 'rgba(0,0,0,.87)' : '#rgba(0,0,0,.61)',
+                                                        textAlign: 'center'
+                                                    }}>{item.name}</Text>
+                                                </View>
+                                            </TouchableOpacity>
+                                            {item.checked && <View style={{
+                                                position: 'absolute',
+                                                top: 0,
+                                                right: 0,
+                                                zIndex: 8,
+                                                backgroundColor: '#f44336',
+                                                borderRadius: 16
+                                            }}>
+                                                <TouchableOpacity onPress={this.clearFilters}>
+                                                    <Icon type='MaterialIcons' name='clear'
+                                                          style={{color: '#FFF', fontSize: 18}}/>
+                                                </TouchableOpacity>
+                                            </View>}
+                                        </View>
+                                    }/>
+                            </ScrollView>
                         </View>
 
                     </Animated.View>

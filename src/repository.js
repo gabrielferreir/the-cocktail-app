@@ -20,13 +20,10 @@ export default class Repository {
             .then(response => response.json());
     }
 
-    async getGlasses() {
-        return await fetch(`https://www.thecocktaildb.com/api/json/v1/1/list.php?g=list`)
-            .then(response => response.json())
-            .then(log => {
-                console.warn(log);
-                return log;
-            });
+    async getList(type) {
+        return await fetch(`https://www.thecocktaildb.com/api/json/v1/1/list.php?${type}=list`)
+            .then(response => response.json());
     }
+
 
 }
