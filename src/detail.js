@@ -60,7 +60,7 @@ export default class Detail extends Component {
                         style={styles.backgroundImage}/>
                     <TouchableOpacity onPress={() => this.props.navigation.navigate('Home')} style={styles.icon}>
                         <Icon type='MaterialIcons'
-                              name='arrow-back' style={{color: '#FFF', marginRight: 16}}/>
+                              name='arrow-back' style={{color: '#4a148c'}}/>
                     </TouchableOpacity>
                 </Animated.View>
 
@@ -82,7 +82,7 @@ export default class Detail extends Component {
                         <View style={styles.border}></View>
 
                         <View>
-                            <Text style={styles.subtitle}>Nome</Text>
+                            <Text style={styles.subtitle}>Name</Text>
                             <Text style={styles.title}>{this.state.drink.name}</Text>
                         </View>
 
@@ -93,8 +93,8 @@ export default class Detail extends Component {
                         <View style={styles.border}></View>
 
                         <View>
-                            <Text style={styles.subheader}>
-                                Ingredientes
+                            <Text style={styles.subtitle}>
+                                Ingredients
                             </Text>
 
                             <FlatList
@@ -113,8 +113,8 @@ export default class Detail extends Component {
                         <View style={styles.border}></View>
 
                         <View>
-                            <Text style={styles.subheader}>
-                                Preparo
+                            <Text style={styles.subtitle}>
+                                Preparation
                             </Text>
 
 
@@ -197,7 +197,10 @@ const styles = StyleSheet.create({
     icon: {
         position: 'absolute',
         top: 16,
-        left: 16
+        left: 16,
+        padding: 4,
+        backgroundColor: '#FFF',
+        borderRadius: 32
     },
     titleHeader: {
         position: 'absolute',
