@@ -272,12 +272,12 @@ export default class Home extends Component<Props> {
                                    onSubmitEditing={this.search}/>
 
                             <Right>
-                                <View style={{flex: 1, flexDirection: 'row', alignItems: 'center'}}>
+                                <View style={styles.formFilter}>
                                     <TouchableOpacity onPress={this.search}>
-                                        <Icon name='search' style={{marginRight: 16}}/>
+                                        <Icon name='search' style={styles.marginRight}/>
                                     </TouchableOpacity>
                                     <TouchableOpacity onPress={this.toogleFilter}>
-                                        <Icon type='MaterialIcons' name='filter-list' style={{marginRight: 16}}/>
+                                        <Icon type='MaterialIcons' name='filter-list' style={styles.marginRight}/>
                                     </TouchableOpacity>
                                 </View>
                             </Right>
@@ -288,10 +288,10 @@ export default class Home extends Component<Props> {
                         height: this.animatedValue, overflow: 'hidden'
                     }}>
                         <View
-                            style={{display: 'flex', flexDirection: 'row', paddingHorizontal: 16, paddingTop: 16}}>
+                            style={[styles.wrapperFilterTitle, {paddingTop: 16}]}>
                             <View style={{flex: 1, flexDirection: 'row', justifyContent: 'center'}}>
                                 <View style={{flex: 1}}>
-                                    <Text style={{fontSize: 14, color: 'rgba(0,0,0,.87)'}}>Search by</Text>
+                                    <Text style={styles.titleFilter}>Search by</Text>
                                     <Text>{this.state.searchByIngredients ? 'Ingredient' : 'Name'}</Text>
                                 </View>
                                 <Switch onValueChange={value => this.setState({
@@ -302,29 +302,22 @@ export default class Home extends Component<Props> {
                         </View>
 
                         <View
-                            style={{display: 'flex', flexDirection: 'row', paddingLeft: 16, paddingVertical: 16}}>
-                            <Text style={{fontSize: 14, color: 'rgba(0,0,0,.87)'}}>Glass</Text>
+                            style={[styles.wrapperFilterTitle, {paddingVertical: 16}]}>
+                            <Text style={styles.titleFilter}>Glass</Text>
                         </View>
 
                         {this.renderFilter(this.state.glasses, this.filterGlass, this.colorGlasses)}
 
                         <View
-                            style={{display: 'flex', flexDirection: 'row', paddingLeft: 16, paddingBottom: 16}}>
-                            <Text style={{fontSize: 14, color: 'rgba(0,0,0,.87)'}}>Alcohol content</Text>
+                            style={[styles.wrapperFilterTitle, {paddingBottom: 16}]}>
+                            <Text style={styles.titleFilter}>Alcohol content</Text>
                         </View>
 
                         {this.renderFilter(this.state.alcoholic, this.filterAlcoholic, this.colorAlcoholic)}
 
                     </Animated.View>
 
-                    <View style={{
-                        flex: 1,
-                        alignItems: 'center',
-                        backgroundColor: '#EEE',
-                        minHeight: 112,
-                        maxHeight: 112,
-                        paddingTop: 16
-                    }}>
+                    <View style={styles.wrapperScrollViewCategory}>
                         <ScrollView
                             alwaysBounceVertical={true}
                             scrollEventThrottle={16}
@@ -337,44 +330,20 @@ export default class Home extends Component<Props> {
                                     <TouchableOpacity onPress={() => {
                                         this.filterCategories(item, index);
                                     }}>
-                                        <View style={{
-                                            height: 96,
-                                            width: 96,
-                                            padding: 8,
-                                            position: 'relative',
-                                        }}>
+                                        <View style={styles.wrapperCategory}>
 
-                                            <View style={{
-                                                flex: 1,
-                                                backgroundColor: this.colorCategory(this.state.typeSearch, item.checked) ? item.color : '#CDCDCD',
-                                                padding: 8,
-                                                justifyContent: 'center',
-                                                alignItems: 'center',
-                                                borderRadius: 2,
-                                                position: 'relative',
-                                                overflow: 'visible'
-                                            }}>
+                                            <View
+                                                style={[styles.category, {backgroundColor: this.colorCategory(this.state.typeSearch, item.checked) ? item.color : '#CDCDCD'}]}>
 
                                                 <Icon type='MaterialIcons' name='local-bar' style={{color: '#FFF'}}/>
-                                                <Text style={{
-                                                    fontSize: 10,
-                                                    color: '#FFF',
-                                                    textAlign: 'center'
-                                                }}>{item.name}</Text>
+                                                <Text style={styles.textCategory}>{item.name}</Text>
 
                                             </View>
 
-                                            {item.checked && <View style={{
-                                                position: 'absolute',
-                                                top: 0,
-                                                right: 0,
-                                                zIndex: 8,
-                                                backgroundColor: '#FFF',
-                                                borderRadius: 16
-                                            }}>
+                                            {item.checked && <View style={styles.wrapperClear}>
                                                 <TouchableOpacity onPress={this.clearFilters}>
                                                     <Icon type='MaterialIcons' name='clear'
-                                                          style={{color: '#000', fontSize: 18}}/>
+                                                          style={styles.clearButton}/>
                                                 </TouchableOpacity>
                                             </View>}
 
@@ -385,59 +354,30 @@ export default class Home extends Component<Props> {
                         </ScrollView>
                     </View>
 
-                    <View style={{height: 48, justifyContent: 'center', padding: 16}}>
-                        <Text style={{
-                            fontSize: 16,
-                            color: 'rgba(0,0,0,.62)'
-                        }}>{this.message(this.state.typeSearch)}</Text>
+                    <View style={styles.wrapperMessage}>
+                        <Text style={styles.message}>{this.message(this.state.typeSearch)}</Text>
                     </View>
 
-                    <View style={{paddingVertical: 16}}>
+                    <View style={styles.paddingVertical}>
 
                         <FlatList
                             data={this.state.drinks}
                             renderItem={({item}) =>
-                                <View style={{
-                                    height: 80,
-                                    backgroundColor: '#FFF',
-                                    borderRadius: 16,
-                                    elevation: 4,
-                                    padding: 8,
-                                    marginBottom: 16,
-                                    marginHorizontal: 16
-                                }}>
+                                <View style={styles.wrapperItemList}>
 
-                                    <View
-                                        style={{
-                                            flex: 1,
-                                            flexDirection: 'row',
-                                            justifyContent: 'center',
-                                            alignItems: 'center'
-                                        }}>
+                                    <View style={styles.flexCenter}>
 
-                                        <View style={{flex: 1, flexDirection: 'row'}}>
+                                        <View style={styles.flexRow}>
 
-                                            <View style={{
-                                                height: 64,
-                                                width: 64,
-                                                backgroundColor: '#CDCDCD',
-                                                borderRadius: 64,
-                                                overflow: 'hidden'
-                                            }}>
+                                            <View style={styles.itemList}>
 
                                                 <Image
                                                     source={{uri: item.image}}
-                                                    style={{height: 64}}/>
-                                                <Text>P</Text>
+                                                    style={styles.imageItemList}/>
 
                                             </View>
 
-                                            <View style={{
-                                                height: 64,
-                                                flex: 1,
-                                                justifyContent: 'center',
-                                                paddingLeft: 16
-                                            }}>
+                                            <View style={styles.contentItemList}>
 
                                                 <Text>{item.name}</Text>
                                                 <Text>{item.category}</Text>
@@ -471,7 +411,7 @@ export default class Home extends Component<Props> {
     renderFilter(list, search, color) {
         return (
             <View
-                style={{display: 'flex', flexDirection: 'row', paddingHorizontal: 16, paddingBottom: 16}}>
+                style={styles.wrapperScrollView}>
 
                 <ScrollView
                     alwaysBounceVertical={true}
@@ -481,37 +421,20 @@ export default class Home extends Component<Props> {
                         horizontal={true}
                         data={list}
                         renderItem={({item, index}) =>
-                            <View style={{paddingVertical: 8, position: 'relative'}}>
+                            <View style={styles.wrapperTouchable}>
                                 <TouchableOpacity onPress={() => {
                                     search(item, index)
                                 }}>
-                                    <View style={{
-                                        paddingHorizontal: 16,
-                                        borderRadius: 12,
-                                        marginHorizontal: 4,
-                                        backgroundColor: color(this.state.typeSearch, item.checked) ? '#eeeeee' : '#fafafa',
-                                        height: 28,
-                                        alignItems: 'center',
-                                        justifyContent: 'center'
-                                    }}>
-                                        <Text style={{
-                                            fontSize: 14,
-                                            color: color(this.state.typeSearch, item.checked) ? 'rgba(0,0,0,.87)' : '#rgba(0,0,0,.61)',
-                                            textAlign: 'center'
-                                        }}>{item.name}</Text>
+                                    <View
+                                        style={[styles.wrapperButton, {backgroundColor: color(this.state.typeSearch, item.checked) ? '#eeeeee' : '#fafafa'}]}>
+                                        <Text
+                                            style={[styles.textButton, {color: color(this.state.typeSearch, item.checked) ? 'rgba(0,0,0,.87)' : '#rgba(0,0,0,.61)'}]}>{item.name}</Text>
                                     </View>
                                 </TouchableOpacity>
-                                {item.checked && <View style={{
-                                    position: 'absolute',
-                                    top: 0,
-                                    right: 0,
-                                    zIndex: 8,
-                                    backgroundColor: '#f44336',
-                                    borderRadius: 16
-                                }}>
+                                {item.checked && <View style={styles.wrapperClear}>
                                     <TouchableOpacity onPress={this.clearFilters}>
                                         <Icon type='MaterialIcons' name='clear'
-                                              style={{color: '#FFF', fontSize: 18}}/>
+                                              style={styles.clearButton}/>
                                     </TouchableOpacity>
                                 </View>}
                             </View>
@@ -521,3 +444,97 @@ export default class Home extends Component<Props> {
         )
     }
 }
+
+const styles = StyleSheet.create({
+    paddingVertical: {paddingVertical: 16},
+    formFilter: {flex: 1, flexDirection: 'row', alignItems: 'center'},
+    marginRight: {marginRight: 16},
+    wrapperClear: {
+        position: 'absolute',
+        top: 0,
+        right: 0,
+        zIndex: 8,
+        backgroundColor: '#f44336',
+        borderRadius: 16
+    },
+    clearButton: {color: '#FFF', fontSize: 18},
+    textButton: {
+        textAlign: 'center',
+        fontSize: 14,
+    },
+    wrapperButton: {
+        paddingHorizontal: 16,
+        borderRadius: 12,
+        marginHorizontal: 4,
+        height: 28,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    wrapperTouchable: {paddingVertical: 8, position: 'relative'},
+    wrapperScrollView: {display: 'flex', flexDirection: 'row', paddingHorizontal: 16, paddingBottom: 16},
+    message: {
+        fontSize: 16,
+        color: 'rgba(0,0,0,.62)'
+    },
+    wrapperMessage: {height: 48, justifyContent: 'center', padding: 16},
+    wrapperItemList: {
+        height: 80,
+        backgroundColor: '#FFF',
+        borderRadius: 16,
+        elevation: 4,
+        padding: 8,
+        marginBottom: 16,
+        marginHorizontal: 16
+    },
+    flexCenter: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    flexRow: {flex: 1, flexDirection: 'row'},
+    itemList: {
+        height: 64,
+        width: 64,
+        backgroundColor: '#CDCDCD',
+        borderRadius: 64,
+        overflow: 'hidden'
+    },
+    imageItemList: {height: 64},
+    contentItemList: {
+        height: 64,
+        flex: 1,
+        justifyContent: 'center',
+        paddingLeft: 16
+    },
+    wrapperScrollViewCategory: {
+        flex: 1,
+        alignItems: 'center',
+        backgroundColor: '#EEE',
+        minHeight: 112,
+        maxHeight: 112,
+        paddingTop: 16
+    },
+    category: {
+        flex: 1,
+        padding: 8,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 2,
+        position: 'relative',
+        overflow: 'visible'
+    },
+    textCategory: {
+        fontSize: 10,
+        color: '#FFF',
+        textAlign: 'center'
+    },
+    wrapperCategory: {
+        height: 96,
+        width: 96,
+        padding: 8,
+        position: 'relative',
+    },
+    titleFilter: {fontSize: 14, color: 'rgba(0,0,0,.87)'},
+    wrapperFilterTitle: {display: 'flex', flexDirection: 'row', paddingHorizontal: 16}
+});
