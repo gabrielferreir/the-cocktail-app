@@ -1,9 +1,8 @@
-import Home from './src/home';
-import Detail from './src/detail';
-import {createStackNavigator, createAppContainer} from 'react-navigation';
+import Home from './home';
+import Detail from './detail';
+import {createStackNavigator} from 'react-navigation';
 
-
-const MainNavigator = createStackNavigator({
+export default createStackNavigator({
         Home: {
             screen: Home,
             title: 'Home'
@@ -25,7 +24,3 @@ const MainNavigator = createStackNavigator({
             },
         },
     });
-
-const App = createAppContainer(MainNavigator);
-
-export default App;
