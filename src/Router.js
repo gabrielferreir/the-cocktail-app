@@ -1,8 +1,8 @@
-import Home from './home';
-import Detail from './detail';
-import {createStackNavigator} from 'react-navigation';
+import Home from './pages/home';
+import Detail from './pages/detail';
+import {createStackNavigator, createAppContainer} from 'react-navigation';
 
-export default createStackNavigator({
+const AppNavigator = createStackNavigator({
         Home: {
             screen: Home,
             title: 'Home'
@@ -24,3 +24,7 @@ export default createStackNavigator({
             },
         },
     });
+
+const AppContainer = createAppContainer(AppNavigator);
+
+export default AppContainer;

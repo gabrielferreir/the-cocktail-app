@@ -13,9 +13,12 @@ import {
 } from 'react-native';
 import {Container, Right, Body, Icon} from 'native-base';
 import {Form, Item, Input, Switch} from 'native-base';
-import Service from './service';
+import Service from '../service';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import {checkItem, updateList, updateInput, deleteItem} from '../actions';
 
-export default class Home extends Component<Props> {
+class Home extends Component<Props> {
 
     service = new Service();
     suggestions = [];
@@ -260,6 +263,7 @@ export default class Home extends Component<Props> {
     };
 
     render() {
+        const {test} = this.props;
         return (
             <Container>
 
@@ -357,6 +361,8 @@ export default class Home extends Component<Props> {
                     <View style={styles.wrapperMessage}>
                         <Text style={styles.message}>{this.message(this.state.typeSearch)}</Text>
                     </View>
+
+                    <Text>Pazuzu {test}</Text>
 
                     <View style={styles.paddingVertical}>
 
@@ -538,3 +544,20 @@ const styles = StyleSheet.create({
     titleFilter: {fontSize: 14, color: 'rgba(0,0,0,.87)'},
     wrapperFilterTitle: {display: 'flex', flexDirection: 'row', paddingHorizontal: 16}
 });
+
+const mapStateToProps = store => ({
+    test: store.clickState.test,
+    lastValue: store.clickState.lastValue,
+    list: store.clickState.list,
+    inputValue: store.clickState.inputValue
+});
+
+const mapDispatchToProps = dispatch =>
+    bindActionCreators({
+        checkItem,
+        updateList,
+        updateInput,
+        deleteItem
+    }, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

@@ -11,7 +11,7 @@ import {
     Image
 } from 'react-native';
 import {Text, Icon, Card} from 'native-base';
-import Service from "./service";
+import Service from "../service";
 
 
 const HEADER_EXPANDED_HEIGHT = 320;
